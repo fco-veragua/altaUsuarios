@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:dual="http://dual2/ui">
+<h:head>
+	<title>Rejilla</title>
+</h:head>
+
+<h:body>
+
+	<h:form id="form">
+		<p:messages id="msgs" showDetail="true" />
+		<fieldset>
+			<legend>
+				<h2>Rejilla</h2>
+			</legend>
+			<p:dataTable id="usuarios" var="usuario"
+				value="#{rejillaVista.usuarios}" rowKey="#{usuario.nif}" rows="10"
+				selection="#{rejillaVista.userSelected}" selectionMode="single"
+				editable="true" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+				rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+
+				<p:ajax event="rowEdit" listener="#{usuario.grabar}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel" listener="#{usuario.grabar}"
+					update=":form:msgs" />
+
+
+				<p:column headerText="NIF" sortBy="#{usuario.nif}"
+					filterBy="#{usuario.nif}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.nif}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText label="NIF" id="nif" value="#{usuario.nif}"
+								required="true">
+								<f:validateRegex pattern="^[0-9]{8}[A-Za-z]$" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<!--  
+				<p:column headerText="NIF">
+					<h:outputText value="#{usuario.nif}" />
+				</p:column>
+			-->
+
+				<p:column headerText="Nombre" sortBy="#{usuario.nombre}"
+					filterBy="#{usuario.nombre}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText label="Marca" id="nombre" value="#{usuario.nombre}"
+								required="true">
+								<f:validateLength minimum="2" maximun="50" />
+								<f:validateRegex pattern="^[A-Za-z]*$" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Apellido" sortBy="#{usuario.apellido}"
+					filterBy="#{usuario.apellido}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.apellido}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText label="Apellido" id="apellido"
+								value="#{usuario.apellido}" required="true">
+								<f:validateLength minimum="5" maximun="75" />
+								<f:validateRegex pattern="^[A-Za-z]*$" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="TipoUsuario" sortBy="#{usuario.tipoUsuario.id}"
+					filterBy="#{usuario.tipoUsuario.descripcion}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.tipoUsuario.descripcion}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:autoComplete id="tipoUsuario" value="#{usuario.tipoUsuario}"
+								completeMethod="#{autocompletadoVista.obtenerTodosTipos}"
+								var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}"
+								converter="conversorTipo" forceSelection="true"
+								scrollHeight="250" dropdown="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="FechaNacimiento"
+					sortBy="#{usuario.fechaNacimiento}" filterBy="#{usuario.fechaNacimiento}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.fechaNacForm}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar id="calendar" placeholder="Fecha Fin"
+								pattern="dd/MM/yyyy" value="#{usuario.fechaNacimiento}">
+
+							</p:calendar>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:6rem">
+					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+						saveTitle="Save Row" />
+				</p:column>
+			</p:dataTable>
+			<p:contextMenu for="usuarios" widgetVar="usuarios">
+				<p:menuitem value="Delete" action="#{rejillaVista.delete}"
+					update=":form:usuarios :form:msgs" />
+				<p:menuitem value="Add"
+					onclick="location.href='formAltaUsuario.xhtml'" />
+			</p:contextMenu>
+		</fieldset>
+	</h:form>
+</h:body>
+</html>

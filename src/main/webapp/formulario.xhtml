@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:dual="http://dual/ui">
+<h:head>
+	<title>Alta Móvil</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<h:messages />
+		<fieldset>
+			<legend>
+				<h2>Añadir Smartphone</h2>
+			</legend>
+
+			<p>Marca</p>
+			<h:inputText label="Marca" id="marca" value="#{altaMovil.marca}"
+				required="true">
+				<f:validateLength minimum="2" />
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</h:inputText>
+			<h:message for="marca"></h:message>
+
+			<br />
+
+			<p>Color</p>
+			<h:inputText label="Color" id="color" value="#{altaMovil.color}"
+				required="true">
+				<f:validateRegex pattern="^(rojo|plata|blanco|azul)$" />
+			</h:inputText>
+			<h:message for="color"></h:message>
+
+			<br />
+
+			<p>SO</p>
+			<h:inputText label="SO" id="SO" value="#{altaMovil.so}"
+				required="true">
+				<dual:sovalidator marca="#{altaMovil.marca}" />
+			</h:inputText>
+			<h:message for="SO"></h:message>
+
+			<br />
+
+			<p>Versión</p>
+			<h:inputText label="version" id="version"
+				value="#{altaMovil.version}" required="true">
+				<f:validateRegex pattern="^(\d+\.)?(\d+\.)?(\*|\d+)$" />
+			</h:inputText>
+			<h:message for="version"></h:message>
+
+			<br />
+
+			<p>RAM</p>
+			<h:inputText label="ram" id="ram" value="#{altaMovil.ram}"
+				required="true">
+				<f:validateLongRange minimum="2" maximum="12" />
+				<dual:ramvalidator marca="#{altaMovil.marca}" />
+			</h:inputText>
+			<h:message for="ram"></h:message>
+			
+			<br />
+			
+			<p>Precio</p>
+			<h:inputText label="Precio" id="precio" value="#{altaMovil.ram}"
+				required="true">
+				<f:validateLongRange minimum="0"/>
+				<f:validateRegex pattern="^[0-9]+\.+?([0-9]*|\.[0-9])+$" />
+			</h:inputText>
+			<h:message for="precio"></h:message>
+			
+			<br />
+			
+			<p>Fecha de venta</p>
+			<h:inputText label="Fecha de venta" id="fechaVenta" value="#{altaMovil.fechaVenta}"
+				required="true">
+				<dual:fechaventaconverter  />
+				<dual:fechaventavalidator/>
+			</h:inputText>
+			<h:message for="fechaVenta"></h:message>
+
+
+			<br />
+			<h:commandButton value="Enviar" action="#{altaMovil.validar}"></h:commandButton>
+		</fieldset>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:dual="http://dual2/ui">
+<h:head>
+	<title>Alta Usuario</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:messages />
+		<fieldset>
+			<legend>
+				<h2>Añadir Usuario</h2>
+			</legend>
+
+			<h4>Nombre</h4>
+			<p:inputText label="Marca" id="nombre" value="#{usuario.nombre}"
+				required="true">
+				<f:validateLength minimum="2" maximun="50" />
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="nombre"></p:message>
+
+			<br />
+
+			<h4>Apellido</h4>
+			<p:inputText label="Apellido" id="apellido"
+				value="#{usuario.apellido}" required="true">
+				<f:validateLength minimum="5" maximun="75" />
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="apellido"></p:message>
+
+			<br />
+
+			<h4>TipoUsuario</h4>
+			<p:outputLabel for="tipoUsuario" value="Tipo de Usuario:" />
+			<br />
+			<p:autoComplete id="tipoUsuario" value="#{usuario.tipoUsuario}"
+				completeMethod="#{autocompletadoVista.obtenerTodosTipos}" var="tipo"
+				itemLabel="#{tipo.descripcion}" itemValue="#{tipo}"
+				converter="conversorTipo" forceSelection="true" scrollHeight="250"
+				dropdown="true" />
+			<p:message for="tipoUsuario"></p:message>
+
+			<br />
+
+			<h4>NIF</h4>
+			<p:inputText label="NIF" id="nif" value="#{usuario.nif}"
+				required="true">
+				<f:validateRegex pattern="^[0-9]{8}[A-Za-z]$" />
+			</p:inputText>
+			<p:message for="nif"></p:message>
+
+			<br />
+
+			<h4>FechaNacimiento</h4>
+			<p:datePicker label="FechaNacimiento" id="fechaNac"
+				value="#{usuario.fechaNacimiento}" required="true"
+				/>
+
+			<p:message for="fechaNac"></p:message>
+		
+			<br />
+			
+			<h4>Sexo</h4>
+			<p:inputText label="Sexo" id="sexo" value="#{usuario.sexo}"
+				required="true">
+				<f:validateRegex pattern="^F|M|f|m$" />
+			</p:inputText>
+			<p:message for="sexo"></p:message>
+
+			<br />
+
+			<h4>País</h4>
+			<p:inputText label="Pais" id="pais" value="#{usuario.pais}"
+				required="true">
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="pais"></p:message>
+
+			<br />
+
+			<h4>Provincia</h4>
+			<p:inputText label="Provincia" id="provincia"
+				value="#{usuario.provincia}" required="true">
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="provincia"></p:message>
+
+			<br />
+
+			<h4>Municipio</h4>
+			<p:inputText label="Municipio" id="municipio"
+				value="#{usuario.municipio}" required="true">
+				<f:validateLength minimum="5" maximun="75" />
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="municipio"></p:message>
+
+			<br />
+
+			<h4>Calle</h4>
+			<p:inputText label="Calle" id="calle" value="#{usuario.calle}"
+				required="true">
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="calle"></p:message>
+
+			<br />
+
+			<h4>Teléfono</h4>
+			<p:inputText label="Tlfno" id="telefono" value="#{usuario.telefono}"
+				required="true">
+				<f:validateRegex pattern="^[0-9]*$" />
+			</p:inputText>
+			<p:message for="telefono"></p:message>
+
+			<br />
+
+			<h4>Observaciones</h4>
+			<p:inputText label="Observaciones" id="observaciones"
+				value="#{usuario.observaciones}" required="true">
+				<f:validateRegex pattern="^[A-Za-z]*$" />
+			</p:inputText>
+			<p:message for="observaciones"></p:message>
+
+			<br />
+
+			<h:commandButton value="Enviar" action="#{usuario.grabar}"></h:commandButton>
+		</fieldset>
+	</h:form>
+</h:body>
+</html>
